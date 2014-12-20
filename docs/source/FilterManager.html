@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='KobeU-data-filter-FilterManager'>/**
+</span> * KobeU.data.filter.FilterManager is used to create KobeU.data.filter.* instances.
+ *
+ */
+
+Ext.define(&#39;KobeU.data.filter.FilterManager&#39;,{
+	extend: &#39;Ext.util.MixedCollection&#39;,
+	singleton:true,
+
+<span id='KobeU-data-filter-FilterManager-method-setup'>	/**
+</span>	 * This method receives a filter configs, checks config.type, and
+	 * create the corresponding KobeU.data.filter.* with the alias &quot;filter.&quot;+config.type.
+	 *
+	 * @param {} config
+	 * @return {}
+	 */
+	setup: function(config) {
+		if(config instanceof Ext.util.Filter) return config;
+		var result;
+		if(config.type) {
+			result = Ext.createByAlias(&#39;filter.&#39;+config.type, config);
+			if(result==undefined) Ext.Error.raise(&quot;Unknown filter type: &quot; + config.type);
+			return result;
+		} else {
+			return Ext.createByAlias(&#39;filter.num&#39;,config);
+		}
+	}
+});</pre>
+</body>
+</html>

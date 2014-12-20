@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='KobeU-data-filter-ExFilter'>/**
+</span> * This filter is a base filter class for Ext.util.Filter.
+ *
+ */
+
+Ext.define(&#39;KobeU.data.filter.ExFilter&#39;, {
+	extend: &#39;Ext.util.Filter&#39;,
+
+<span id='KobeU-data-filter-ExFilter-cfg-comps'>	/**
+</span>	 * @cfg {Object} comps
+	 * This comps Object is used to hold the mapping from operator name to the
+	 * comparator of the two values.
+	 */
+	comps: {
+		&#39;==&#39;: function(val, val2) { return val==val2; },
+		&#39;!=&#39;:function(val, val2) { return val!=val2; },
+		&#39;nop&#39;: function(val, val2) { return true; }
+	},
+<span id='KobeU-data-filter-ExFilter-cfg-defaultOpe'>	/**
+</span>	 * @cfg {String} defaultOpe
+	 * the name of default operator
+	 */
+	defaultOpe: &#39;==&#39;,
+
+<span id='KobeU-data-filter-ExFilter-method-constructor'>	constructor:function(config){
+</span>		this.callParent([config]);
+		this.comp=this.comps[config.operator||this.defaultOpe];
+	},
+<span id='KobeU-data-filter-ExFilter-method-getVal'>	/**
+</span>	 * get the property value.
+	 * @param {KobeU.data.Model} item
+	 * @return {Object}
+	 */
+	getVal: function(item) {
+		return this.getRoot(item)[this.property];
+	},
+<span id='KobeU-data-filter-ExFilter-cfg-loalFilter'>	/**
+</span>	 * @cfg {Function} loalFilter
+	 * The additional local filter that receives the target record as a single argument.
+	 * This class first applys the default operator, which is
+	 * specified by &quot;this.operator&quot; and &quot;this.value&quot;, and then
+	 * apply localFilter and localPropertyFIlter when the formaer is true.
+	 *
+	 */
+	localFilter: undefined,
+<span id='KobeU-data-filter-ExFilter-cfg-loalPropertyFilter'>	/**
+</span>	 * @cfg {Function} loalPropertyFilter
+	 * The additional local filter that receives the property value as a single argument.
+	 * This class first applys the default operator, which is
+	 * specified by &quot;this.operator&quot; and &quot;this.value&quot;, and then
+	 * apply localFilter and localPropertyFIlter when the formaer is true.
+	 */
+	localPropertyFilter: undefined,
+
+
+<span id='KobeU-data-filter-ExFilter-cfg-merge'>	/**
+</span>	 * @cfg {Function} merge
+	 * You can set a murge function.
+	 * The merge function is used to merge this filter with the target filter to create unioned operation if possible..
+	 */
+	merge: undefined,
+
+<span id='KobeU-data-filter-ExFilter-method-checkLocalFilter'>	/*
+</span>	 * check localFilters.
+	 */
+	checkLocalFilter:function(target){
+		if(this.localFilter&amp;&amp;!this.localFilter(target)) {
+			return false;
+		}
+		if(this.localPropertyFilter&amp;&amp;
+			(!this.property||!this.localPropertyFilter(this.getVal(target)))) {
+			return false;
+		}
+		return true;
+	},
+<span id='KobeU-data-filter-ExFilter-method-setValue'>	/*
+</span>	 * override setValue to prevent the override of filterFn by the superclass.
+	 */
+	setValue: function(val) {
+		Ext.apply(this, {value: val});
+	},
+<span id='KobeU-data-filter-ExFilter-property-comp'>	comp: null,
+</span><span id='KobeU-data-filter-ExFilter-method-compare'>	/**
+</span>	 * comparator of two values.
+	 * @param {} val0
+	 * @param {} val1
+	 * @return {}
+	 */
+	compare: function(val0, val1) {
+		return this.comp(val0, val1);
+	},
+<span id='KobeU-data-filter-ExFilter-method-filterFn'>	/**
+</span>	 * filterFn
+	 * @param {} target
+	 * @return {}
+	 */
+	filterFn:function(target){
+		//return this.getVal(target)==this.value;
+		return this.compare(this.getVal(target), this.value)
+		&amp;&amp; this.checkLocalFilter(target);
+	}
+});
+</pre>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='KobeU-data-EditWarning'>/**
+</span> * This class represents a warning that may occur
+ * when the source element of the joined element receives set operations.
+ */
+Ext.define(&#39;KobeU.data.EditWarning&#39;, {
+	statics:{
+<span id='KobeU-data-EditWarning-static-method-loseModifiedViews'>		/**
+</span>		 * create a warning when the set operation is going to write onto the fields in the left source element,
+		 * and the joined element may replace the right source element that holds modified values which is written
+		 * via the target joined element.
+		 * @param {} config
+		 * @return {}
+		 */
+		loseModifiedViews:function(config){
+			return Ext.applyIf({
+				type: &#39;LoseModifiedViews&#39;,
+				getType:function(){
+					return &quot;LoseModifiedView&quot;;
+				},
+				getMessage:function(){
+					return &quot;lose right&quot;;
+				}
+			},config);
+		}
+	}
+});
+</pre>
+</body>
+</html>

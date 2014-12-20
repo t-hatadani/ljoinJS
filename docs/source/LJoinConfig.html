@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='KobeU-data-LJoinConfig'>/**
+</span> * LJoinConfig is used to specify join conditions of {KobeU.data.LJoinedManager}.
+ *
+ */
+Ext.define(&#39;KobeU.data.LJoinConfig&#39;,{
+<span id='KobeU-data-LJoinConfig-cfg-alias'>	/**
+</span>	 * @cfg {String} alias
+	 * The alias for this source element to be treated in the joined element.
+	 */
+<span id='KobeU-data-LJoinConfig-cfg-modelID'>	/**
+</span>	 * @cfg {String} modelID
+	 * The name of the Ext.data.Model class to be joined. You have to specify modelID or model.
+	 */
+<span id='KobeU-data-LJoinConfig-cfg-model'>	/**
+</span>	 * @cfg {} model
+	 * The model class of the Ext.data.Model to be joined. You have to specify modelID or model.
+	 */
+
+<span id='KobeU-data-LJoinConfig-cfg-selections'>	/**
+</span>	 * @cfg {Array} selections
+	 * The list of filters.
+	 *
+	 * In each filter, you can use the value of left tables as:
+	 *
+	 *       { property: &#39;field1&#39;, value: { table: &#39;model0&#39;, property: &#39;field0&#39;}}
+	 *
+	 * The above means that field1 is filtered by the value of model0 on field0.
+	 * You can specify data type (&#39;type&#39; attribute), operator (&#39;operator&#39; attribtue), and so on.
+	 * The parameters are used to create KobeU.data.filter.* instances.
+	 * If you specify &quot;type&quot; as the type attribute, this library uses the filter class with the alias &quot;&#39;filter.&#39;+type&quot;.
+	 *
+	 */
+
+	constructor: function(config) {
+		var me=this,
+			key = config.alias;
+		Ext.apply(me, config);
+		Ext.apply(me, {
+			// for compatibility
+			label: key,
+			fields : {}
+		});
+		if (Ext.isFunction(me.model)) {
+			Ext.applyIf(me, {
+				mdoelID: me.model.getName()
+			})
+		} else {
+			var modelName = me.tableID||me.modelID;
+			me.model = Ext.ModelManager.getModel(modelName);
+			if (!me.model)
+				Ext.Error.raise(&quot;Unknown Model@LJoinConfig: &quot; + modelName);
+		}
+	},
+
+<span id='KobeU-data-LJoinConfig-method-setupFields'>	/*
+</span>	 * @private
+	 * setup fields
+	 * @param {KobeU.data.LJoinManager} manager
+	 */
+
+	setupFields: function(manager) {
+		var me=this;
+		this.model.prototype.fields.each(function(f) {
+			var jname = manager.getJFieldName(me.alias, f.name);
+			var jf = Ext.apply(new Ext.data.Field(f), {
+						name : jname
+					});
+			manager.fieldlist.push(jf);
+			manager.fieldinfo[jname] = {
+				label : me.alias,
+				orgname : name,
+				name : jname,
+				finfo : jf
+			};
+			me.fields[jname] = f;
+		});
+	}
+});
+</pre>
+</body>
+</html>

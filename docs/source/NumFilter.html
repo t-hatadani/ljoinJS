@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='KobeU-data-filter-NumFilter'>/**
+</span> * A filter for numbers.
+ *
+ *
+ */
+Ext.define(&#39;KobeU.data.filter.NumFilter&#39;, {
+	extend: &#39;KobeU.data.filter.ExFilter&#39;,
+	alias: &#39;filter.num&#39;,
+
+<span id='KobeU-data-filter-NumFilter-cfg-comps'>	/**
+</span>	 * @cfg {Object} comps
+	 * This comps Object is used to hold the mapping from operator name to the
+	 * comparator of the two values.
+	 */
+	comps: {
+		&#39;==&#39;: function(val, val2) { return val==val2; },
+		&#39;!=&#39;:function(val, val2) { return val!=val2; },
+		&#39;&lt;&#39;: function(val, val2) { return val&lt;val2; },
+		&#39;&gt;&#39;: function	(val, val2) { return val&gt;val2; },
+		&#39;&lt;=&#39;: function(val, val2) { return val&lt;=val2; },
+		&#39;&gt;=&#39;: function(val, val2) { return val&gt;=val2; },
+		&#39;nop&#39;: function(val, val2) { return true; }
+	},
+
+<span id='KobeU-data-filter-NumFilter-method-merge'>	/**
+</span>	 * merge this filter with the target filter to create union operation if possible..
+	 * @param {Object} filter the target filter
+	 * @return {}
+	 */
+	merge: function(filter) {
+		if(filter.property!==this.property||filter.operator!==this.operator||filter.type!==this.type)
+			return null;
+		var d1 = this.value, d2 = filter.value;
+		switch(this.operator) {
+			case &#39;&lt;&#39;:
+			case &#39;&lt;=&#39;:
+			case &#39;&gt;&#39;:
+			case &#39;&gt;=&#39;:
+				if(this.comp(d1,d2)) return filter;
+				else return this;
+			default:
+				return null;
+		}
+	}
+});
+</pre>
+</body>
+</html>

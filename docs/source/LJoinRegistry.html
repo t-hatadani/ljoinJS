@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='KobeU-data-LJoinRegistry'>/**
+</span> * LJoinRegistry is a registry to register LJoinManagers.
+ *
+ */
+
+Ext.define(&#39;KobeU.data.LJoinRegistry&#39;,{
+	extend: &#39;Ext.util.MixedCollection&#39;,
+	singleton:true,
+
+<span id='KobeU-data-LJoinRegistry-method-register'>	/**
+</span>	 * register LJoinManager using its name.
+	 * The default constructor of the LJoinManager call this method.
+	 *
+	 * @param {KobeU.data.LJoinManager} manager
+	 */
+	register:function(manager){
+		this.add(manager.name, manager);
+	},
+
+<span id='KobeU-data-LJoinRegistry-method-unregister'>	/**
+</span>	 * register LJoinManager
+	 * @param {KobeU.data.LJoinManager} manager
+	 */
+	unregister:function(manager){
+		this.remove(manager.name);
+	},
+
+<span id='KobeU-data-LJoinRegistry-method-lookup'>	/**
+</span>	 * lookup LJoinManager by its name
+	 * @param {String} name
+	 * @return {KoobeU.data.LJoinManager} return the LJoinManager with the specified. return null if not found.
+	 */
+	lookup: function(name) {
+		return this.get(name);
+	}
+});</pre>
+</body>
+</html>

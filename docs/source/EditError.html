@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='KobeU-data-EditError'>/**
+</span> * This class represents an error that may occur
+ * when the joined element receives set operations.
+ */
+Ext.define(&#39;KobeU.data.EditError&#39;, {
+	statics:{
+<span id='KobeU-data-EditError-static-method-emptySrcElement'>		/**
+</span>		 * create an error when the set operation is going to write onto the fields that
+		 * does not have owner source elements.
+		 * Set &quot;config.src&quot; as the alias name of the source element.
+		 * @param {} config
+		 * @return {}
+		 */
+		emptySrcElement:function(config){
+			return Ext.applyIf({
+				getType:function(){
+					return &quot;EmptySrcElement&quot;;
+				},
+				getMessage:function(){
+					return &quot;Source \&quot;&quot;+this.src+&quot;\&quot; is Empty.&quot;;
+				}
+			},config);
+		},
+<span id='KobeU-data-EditError-static-method-matchedField'>		/**
+</span>		 * create an error when the set operation is going to write onto the matched fields,
+		 * which is the field of the right table and used for join conditions to be connected with left tables.
+		 * Set &quot;config.field&quot; as the name of the matched field.
+		 * @param {} config
+		 * @return {}
+		 */
+		matchedField:function(config){
+			return Ext.applyIf({
+				type:&quot;Matchedfield&quot;,
+				getType:function(){
+					return &quot;MatchedField&quot;;
+				},
+				getMessage:function(){
+					return &quot;Field \&quot;&quot;+this.field+&quot;\&quot; is used for matched attribute.&quot;;
+				}
+			},config);
+		},
+
+<span id='KobeU-data-EditError-static-method-LRconflict'>		/**
+</span>		 * raise an error when the set operator changes the value of selector fields
+		 * and also want to change the fields of the right source elements, which may be
+		 * replaced by the write in selector field.
+		 * @param {} config
+		 * @return {}
+		 */
+		LRconflict:function(config){
+			return Ext.applyIf({
+				type:&quot;LRconflict&quot;,
+				getType:function(){
+					return &quot;LRconflict&quot;;
+				},
+				getMessage:function(){
+					return &quot;You want to edit \&quot;&quot;+this.src+&quot;\&quot;, but right src \&quot;&quot;+this.right+&quot;\&quot; is editing too&quot;;
+				}
+			},config);
+		},
+
+<span id='KobeU-data-EditError-static-method-LRcoOccurence'>		/**
+</span>		 * create an error when the set operation is going to write onto a field in the right source element that
+		 * also appears as the left source element of the same joined element, and this write operation may
+		 * erace the appearance of the source element on the right alias.
+		 * Set &quot;config.src&quot; as the name of the target field.
+		 * @param {} config
+		 * @return {}
+		 */
+		LRcoOccurence:function(config){
+			return Ext.applyIf({
+				type:&quot;LRcoOccurence&quot;,
+				getType:function(){
+					return &quot;LRcoOccurence&quot;;
+				},
+				getMessage:function(){
+					return &quot;\&quot;&quot;+this.src+&quot;\&quot; is used as left source \&quot;&quot;+this.left+&quot;\&quot; and right source \&quot;&quot;+
+						this.right+&quot;\&quot;.Tthis edit may disappear. \&quot;&quot;+this.right+&quot;\&quot;.&quot;;
+				}
+			},config);
+		}
+	}
+});
+</pre>
+</body>
+</html>
