@@ -6,6 +6,8 @@ of the joined view has update.
 
 This library assumes Ext JS version 2.4.1.
 
+* [API document](http://magritte.cs.scitec.kobe-u.ac.jp/ljoinJS/ljoinJS/docs/)
+
 # LJoinManager
 
 The LJoinManager is a manager to define a kind of join relations between Models.
